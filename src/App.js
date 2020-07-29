@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import Formulaire from './components/Formulaire'
 import Message from './components/Message'
 import './App.css'
+
+// Firebase
+import base from './base'
 
 class App extends Component {
   state = {
@@ -9,8 +12,21 @@ class App extends Component {
     pseudo: this.props.match.params.pseudo
   }
 
+  messagesRef = createRef()
+
+  componentDidMount () {
+    base.syncState('/', {
+      context: this,
+      state: 'messages'
+    })
+  }
+
+  componentDidUpdate () {
+    const ref = this.messagesRef.current
+    ref.scrollTop = ref.scrollHeight
+  }
+
   addMessage = message => {
-    console.log('addMessage')
     const messages = { ...this.state.messages }
     messages[`message-${Date.now()}`] = message
     console.log(messages)
@@ -33,7 +49,7 @@ class App extends Component {
     return (
       <div className='box'>
         <div>
-          <div className='messages'>
+          <div className='messages' ref={this.messagesRef}>
             <div className="message">
               { messages }
             </div>
