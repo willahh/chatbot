@@ -29,7 +29,13 @@ class App extends Component {
   addMessage = message => {
     const messages = { ...this.state.messages }
     messages[`message-${Date.now()}`] = message
-    console.log(messages)
+    Object
+      .keys(messages)
+      .slice(0, -10)
+      .forEach(key => {
+        messages[key] = null
+      })
+    console.log('messages', messages);
     this.setState({ messages })
   }
 
