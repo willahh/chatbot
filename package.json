@@ -27,5 +27,6 @@
   },
   "standard": {
     "parser": "babel-eslint"
-  }
+  },
+  "homepage": "https://willahh.github.io/chatbot"
 }
